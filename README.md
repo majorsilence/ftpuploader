@@ -3,8 +3,13 @@
 Example usage
 
 ```bash
-./ftpuploader -host "some.ftp.site.com" -port 21 -username "some name" -password "some password" -src "/path/to/some/file.txt" -dest "/path/to/upload/some/file/txt"
+./ftpuploader -host "some.ftp.site.com" -port 21 -username "some name" -password "some password" -src "/path/to/some/file.txt" -dest "/path/to/upload/some/file/txt" -servertype="ftps"
 ```
+
+Valid server types are
+
+* ftps
+* scp
 
 
 linux
