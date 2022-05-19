@@ -4,19 +4,9 @@ using FluentFTP.Helpers;
 
 namespace ftpuploader;
 
-public sealed class Uploader : IDisposable
+public sealed class Uploader : IUploader
 {
     FtpClient client;
-
-    public void Dispose()
-    {
-        if (client.IsConnected)
-        {
-            client.Disconnect();
-        }
-
-        client.Dispose();
-    }
 
     public Uploader(string host, int port, string username, string password)
     {
@@ -41,5 +31,15 @@ public sealed class Uploader : IDisposable
             await client.UploadFileAsync(srcPath, dest, FtpRemoteExists.Overwrite,
                 true, FtpVerify.OnlyChecksum);
         }
+    }
+
+    public void Dispose()
+    {
+        if (client.IsConnected)
+        {
+            client.Disconnect();
+        }
+
+        client.Dispose();
     }
 }

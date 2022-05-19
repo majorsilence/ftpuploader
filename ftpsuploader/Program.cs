@@ -9,6 +9,7 @@ string host = string.Empty;
 int port = 0;
 string username = string.Empty;
 string password = string.Empty;
+string servertype = "ftps";
 
 if (args.Length > 0)
 {
@@ -34,6 +35,9 @@ if (args.Length > 0)
             case "-password":
                 password = args[i + 1];
                 break;
+            case "-servertype":
+                servertype = args[i + 1];
+                break;
         }
     }
 }
@@ -43,7 +47,17 @@ else
     Environment.Exit(1);
 }
 
-using var up = new Uploader(host, port, username, password);
-await up.UploadFileAsync(src, dest);
+if (string.IsNullOrWhiteSpace("ftps"))
+{
+    using var up = new Uploader(host, port, username, password);
+    await up.UploadFileAsync(src, dest);
+}
+else
+{
+    using var up = new ScpUploader(host, port, username, password);
+    await up.UploadFileAsync(src, dest);
+}
+
+
 
 Console.WriteLine("😊");
